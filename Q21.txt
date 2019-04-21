@@ -1,0 +1,111 @@
+#include <stdio.h>
+int main_menu(){
+    int c;
+    printf("1. Default Values\n");
+    printf("2. User Input Values\n");
+    scanf("%d",&c);
+    return c;
+}
+int convertor(int time){
+    printf("1. time in milliseconds\n2. time in nanoseconds");
+    int convert_choice;
+    scanf("%d",&convert_choice);
+    if (convert_choice == 1)
+        return (time * 1000000);
+    else
+        return (time);
+ 
+}
+
+void calculate (int c_max_access_time, int c_memory_access_time, double percent, int c_time_service_page, int c_time_service_page_modified){
+    double num = (c_max_access_time - c_memory_access_time)/(((1-percent) * c_time_service_page)+(percent * c_time_service_page_modified)-100);
+
+    printf("p = %f\n",num);
+    
+}
+
+int main(int argc, const char * argv[]) {
+
+    int time_service_page,c_time_service_page,time_service_page_modified,c_time_service_page_modified,memory_access_time,c_memory_access_time,max_access_time,c_max_access_time;
+    double percent_time;
+    int c = main_menu();
+    if (c==1){
+        int c_max_access_time = 200;
+        int c_memory_access_time= 100;
+        double percent = 0.7;
+        int c_time_service_page= 8000000;
+        int c_time_service_page_modified= 20000000;
+        calculate (c_max_access_time,c_memory_access_time,percent,c_time_service_page,c_time_service_page_modified);
+    }
+    if (c==2){
+        printf("Enter time to service a page fault if empty frame is avilable or if replaced page is not modified :\n");
+        scanf("%d",&time_service_page);
+        c_time_service_page = convertor(time_service_page);
+        printf("converted : '%d'",c_time_service_page);
+        printf("Enter time to service a page fault if empty frame is avilable or if replaced page is modified :\n");
+        scanf("%d",&time_service_page_modified);
+        c_time_service_page_modified = convertor(time_service_page_modified);
+        printf("converted : '%d'",c_time_service_page_modified);
+        printf("Enter memory access time :\n");
+        scanf("%d",&memory_access_time);
+        c_memory_access_time = convertor(memory_access_time);
+        printf("converted : '%d'",c_memory_access_time);
+        printf("Enter percentage of time the page to be replaced is modified :\n");
+        scanf("%lf",&percent_time);
+        double percent = percent_time/100;
+        printf("%f",percent);
+        printf("Enter maximum access time :\n");
+        scanf("%d",&max_access_time);
+        c_max_access_time = convertor(max_access_time);
+        printf("converted : '%d'",c_max_access_time);
+        calculate (c_max_access_time,c_memory_access_time,percent,c_time_service_page,c_time_service_page_modified);
+        
+    }
+    
+    
+    
+    return 0;
+}
+
+
+
+
+
+#include<iostream>
+using namespace std;
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include<math.h>
+using namespace std;
+int main()
+{
+float pf,pfn,pm,pmn,mat,succ,success,fail,failure,et,pasr,losr,mr,fn,fi,pn;
+float n=1000000;
+cout<<"Time For A Page Fault For Empty Page :\n ";
+cin>>pf;
+pfn=pf*n;
+cout<<"Time For Modified Page :\n";
+cin>>pm;
+pmn=pm*n;
+cout<<"Enter Memory Access Time :\n";
+cin>>mat;
+cout<<"Reading Updated Page Percentage :\n";
+cin>>succ;
+success=succ/100;
+fail=100-succ;
+failure=fail/100;
+cout<<"Reading Unupdated Page Percetnage :"<<fail<<"%";
+cout<<"\nEnter The Effective Time : ";
+cin>>et;
+losr=failure*pfn;
+pasr=success*pmn;
+mr=mat+pasr+losr;
+fn=mat-mr;
+fi=mat-et;
+pn=fi/fn;
+system("cls");
+cout<<"Therefore Page Fault Related To Above Details is : ";
+cout<<"\n\n is : "<<pn<<"ns.\n";
+return 0;
+}
